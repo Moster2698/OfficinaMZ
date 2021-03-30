@@ -1,0 +1,85 @@
+.content {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  
+}
+h4 {
+  text-align: left;
+}
+.box-riepilogo {
+  width: 35%;
+  border: 1px solid black;
+}
+.box-dati {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.dato {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.prezzo {
+  font-weight: bolder;
+  margin-right: 10px;
+}
+.box-header{
+  text-align: center;
+  font-weight: bold;
+  height: min-content;
+}
+p {
+  margin-bottom: 5px;
+}
+.fine-dato {
+  display: flex;
+  height: max-content;
+}
+.bottone-conferma {
+  border-radius: 10px;
+  border: #3C990E 1px solid;
+  transition-duration: 0.4s;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  float: right;
+  text-align: center;
+  font-size: large;
+}
+.bottone-conferma:hover {
+  background-color: #3C990E;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.bottone-annulla {
+  border-radius: 10px;
+  border: #993D15 1px solid;
+  transition-duration: 0.4s;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  float: right;
+  text-align: center;
+  font-size: large;
+}
+.bottone-annulla:hover {
+  background-color: #993D15;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.footer-buttons{
+  display: flex;
+  align-items: baseline;
+}
+.box-footer{
+  display: flex;
+  justify-content: space-between;
+}
+.ingrediente-extra{
+  font-size: large;
+  font-style: italic;
+}

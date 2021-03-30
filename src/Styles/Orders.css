@@ -1,0 +1,38 @@
+
+
+.card-deck{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px 15px 0px 15px;
+    position: relative;
+}
+
+.Ordine{
+    display: flex;
+    text-align: center;
+    margin: 15px;
+    min-width: 10.25rem;
+    min-height: 10.7rem;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 15px;
+    position: static;
+}
+.Ordine-ingrediente{
+    border-top: 1px solid gray;
+    padding-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+@media only screen and (max-width: 600px){
+    .Ordine{
+        display: inline-block;
+
+    }
+    body{
+        text-align: left;
+    }
+}
+/*   min-width: 10.25rem;
+    min-height: 10.7rem;
+*/

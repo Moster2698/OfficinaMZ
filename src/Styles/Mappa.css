@@ -1,0 +1,109 @@
+:root {
+    --white: #ffffff;
+    --dark: #34393c;
+    --table-free: #1c8a00;
+    --table-busy: #b50c00;
+    --rgb-yellow: rgba(235, 207, 155, 0.8);
+}
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#default-theme {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    top: 20px;
+    left:0;
+    position: fixed;
+    font-size: 0.6em;
+    font-weight: 300;
+    padding: 10px;
+    color: var(--white);
+    font-size: 0.6em;
+}
+.grid-wrapper {
+    max-width: 1200px;
+    height: 450px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 100px);
+    grid-template-rows: repeat(4, 100px);
+    grid-gap: 10px;
+    max-width: 1200px;
+    height: auto;
+}
+.grid-item {
+   border: 5px solid var(--table-free);
+   color: var(--table-free);
+   display: flex;
+  
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   transition: all .2s ease;
+}
+.grid-item:hover {
+    background-color: var(--table-free);
+    color: var(--dark);
+    border: 5px solid #34393c;
+}
+.grid-item-busy {
+    border: 5px solid var(--table-busy);
+    color: var(--table-busy);
+    display: flex;
+   
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease;
+ }
+ .grid-item-busy:hover {
+     background-color: var(--table-busy);
+     color: var(--dark);
+     border: 5px solid #34393c;
+ }
+#hidden {
+    visibility: hidden;
+}
+#hidden:hover {
+    background-color: transparent;
+}
+#title {
+    font-size: 1.2em;
+    text-transform: capitalize;
+}
+#description {
+    font-size: 0.6em;
+    font-weight: 300;
+}
+.key {
+    height: 60px;
+    width: 100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#dot-free, #dot-busy {
+    height: 15px;
+    width: 15px;
+    margin: 10px;
+    padding:10px;
+    border-radius: 50%;
+}
+#dot-free {
+    background-color: var(--table-free);
+}
+#dot-busy {
+    background-color: var(--table-busy);
+}

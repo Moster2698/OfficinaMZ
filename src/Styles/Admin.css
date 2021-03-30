@@ -1,0 +1,109 @@
+.box-soldi {
+  display: flex;
+  margin: auto;
+  justify-content: space-evenly;
+  width: 50%;
+  font-size: 40px;
+  padding: 3px;
+  border: 3px solid lightgray;
+}
+
+.charts {
+  display: flex;
+  justify-content: flex-end;
+}
+.canvas-strano {
+  margin-top: 20px;
+  width: 50vw;
+  height: 25rem;
+  background-color: white;
+}
+.deck-info {
+  width: 32vw;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-right: 2vw;
+  position: relative;
+}
+.box-info {
+  display: flex;
+
+  flex-direction: column;
+  margin: 5px;
+  text-align: center;
+  width: 15rem;
+  height: 15rem;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.box-header {
+  height: 50%;
+  justify-content: center;
+}
+
+.card-prodotto {
+  text-align: center;
+  margin: 10px;
+  height: min-content;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+.lista-prodotti {
+  display: flex;
+  flex-direction: row;
+}
+.box-ingredienti-prodotto {
+  display: flex;
+  text-align: left;
+  font-size: 14px;
+}
+h6 {
+  text-align: left;
+}
+.bottoni-prodotto {
+  margin-right: 10px;
+}
+.prodotto-aggiungi {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.prodotto-bottone {
+  width: 2rem;
+  height: 2rem;
+  display: block;
+  outline: none;
+  border: none;
+}
+.prodotto-bottone:hover {
+  font-weight: 1000;
+}
+
+*:focus {
+  outline: 0 !important;
+}
+.modal-header {
+  color: #8e24ff;
+  text-align: center;
+  display: block;
+}
+
+
+.prodotto-ingrediente-extra {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.prodotto-ingrediente-extra >p{
+margin: 0;
+}
+.prodotto-aggiungi-extra {
+  font-size: small;
+  height: min-content;
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+}

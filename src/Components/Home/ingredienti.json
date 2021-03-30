@@ -1,0 +1,43 @@
+[
+    {
+        "id" : 1,
+        "categoria": "affettati",
+        "name":"Salamino Piccante",
+        "visible":true,
+        "price": 1.00
+
+    },
+    {
+        "id" : 2,
+        "categoria": "latticini",
+        "name":"Mozzarella di Bufala",
+        "visible":true,
+        "price": 2.00
+
+    },
+    {
+        "id" : 3,
+        "categoria": "affettati",
+        "name":"Prosciutto Cotto",
+        "visible":true,
+        "price": 1.00
+
+    },
+    {
+        "id" : 4,
+        "name":"Gorgonzola",
+        "categoria": "latticini",
+        "visible":true,
+        "price": 1.50
+
+    },
+    {
+        "id" : 5,
+        "name":"Funghi",
+        "categoria": "verdure",
+        "visible":true,
+        "price": 1.50
+
+    }
+
+]

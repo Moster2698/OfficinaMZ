@@ -1,0 +1,133 @@
+
+.modal-elimina-ingrediente {
+  border: 1px solid;
+  background-color: white;
+  color: red;
+  margin-bottom: 16px;
+}
+.modal-aggiungi-ingrediente {
+  border: 1px solid;
+
+  background-color: white;
+  color: green;
+  margin-bottom: 16px;
+}
+.pizza {
+  max-height: 1%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  color: black;
+  text-align: center;
+  border: #6e09db 1px solid;
+}
+.ciao {
+  font-size: small;
+}
+.ingredienti {
+  text-align: left;
+  position: sticky;
+}
+.ingrediente {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  font-style: italic;
+}
+
+.ingredienteAggiunto {
+  font-weight: bold;
+}
+.bottoneIngredienti {
+  border: #6e09db 1px solid;
+  transition-duration: 0.4s;
+  margin-left: 5px;
+  float: right;
+  text-align: center;
+}
+.bottonePrezzo {
+  border: #6e09db 1px solid;
+  transition-duration: 0.4s;
+  outline-offset: -2px;
+  background-color: white;
+}
+.bottonePrezzo:hover {
+  background-color: #6e09db;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.bottoni {
+  display: flex;
+  margin-right: 50px;
+}
+.bottoneIngredienti:hover {
+  background-color: #6e09db;
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.riepilogoPizza {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: large;
+}
+
+.homeBody {
+  display: flex;
+  justify-content: space-between;
+}
+ul {
+  font-size: 16px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.riassuntoOrdini {
+  width: 25%;
+  margin-left: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.container-ordine {
+  width: 100%;
+  position: relative;
+  border: 1px dotted black;
+  padding: 1rem 1rem 1rem 1rem;
+}
+.ordine {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  border: 1px solid black;
+  font-style: italic;
+  font-size: medium;
+  
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed black;
+}
+.buttonOrder {
+  border: 0;
+  color: red;
+  background-color: white;
+  font-size: larger;
+}
+.buttonOrder:hover {
+  color: white;
+  background-color: rgb(212, 56, 56);
+}
+.ordine > p {
+  margin: 0px;
+}
+.ingrediente-ordine {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}

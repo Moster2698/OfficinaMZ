@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Margherita",
+        "category": "Classiche",
+        "ingredients": "Pomodoro, Mozzarella, Origano",
+        "price": "5.00",
+        "id": 1
+    },
+    {
+        "name": "Diavola",
+        "category": "Classiche",
+        "ingredients": "Pomodoro, Mozzarella, Salamino Piccante",
+        "price": "5.50",
+        "id": 2
+    },
+    {
+        "name": "Tonno",
+        "category": "Classiche",
+        "ingredients": "Pomodoro, Mozzarella, Tonno",
+        "price": "5.00",
+        "id": 3
+    }
+]

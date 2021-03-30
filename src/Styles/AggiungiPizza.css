@@ -1,0 +1,92 @@
+.model-aggiungi-pizza {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-inserimento-ingredienti {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.titolo-inserimento-pizza {
+  color: #7827cfc5;
+  text-align: center;
+  display: block;
+}
+.intro-dati {
+  color: #8d46dac5;
+  font-style: italic;
+}
+
+.modal-background .modal-content {
+  border: 2px solid #230145;
+}
+.modal-input:hover {
+  outline: none;
+  border-color: #6E09DB;
+}
+
+.ricerca input{
+  margin-right: 5px;
+}
+.ricerca{
+  display: flex;
+  align-items: baseline;
+}
+
+.bottone-invio{
+  border-color: #6E09DB;
+  background-color: white;
+  color: #6E09DB;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: none;
+}
+.bottone-invio:hover{
+  background-color: #6E09DB;
+  color:white;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+input{
+  color: #230145;
+  font-weight: 500;
+}
+.ricerca-text:hover{
+  border-color: #6E09DB;
+}
+
+.errore-doppione{
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  font-size: large;
+  color: #6E09DB;
+  border: #6E09DB 1px solid;
+  border-radius: 25%;
+
+}
+
+.input-nome-pizza{
+  display: flex;
+}
+
+.errore-doppione .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  color: #6E09DB;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.errore-doppione:hover .tooltiptext {
+  visibility: visible;
+}
