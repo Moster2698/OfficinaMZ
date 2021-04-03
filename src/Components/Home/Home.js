@@ -12,6 +12,7 @@ import PrezzoContext from "../../Contexts/PrezzoContext";
 import Bevanda from "./Bevanda";
 import BevandaOrder from "./BevandaOrder";
 import RistorazioneContext from "../../Contexts/RistorazioneContext";
+import ModalConferma from "./ModalConferma";
 import { Modal } from "react-bootstrap";
 
 function Home() {
@@ -22,6 +23,7 @@ function Home() {
   );
   const { ordiniPizze, ordiniBevande, ordiniCibo } = useContext(OrdiniContext);
   const [ordiniTotali, setOrdiniTotali] = ordiniPizze;
+  const [mostraConferma,setMostraConferma] = useState(false);
   const [ordiniBevandeTotali, setordiniBevandeTotali] = ordiniBevande;
   const [ciboOrdiniTotali, setCiboOrdiniTotali] = ordiniCibo;
   const [numeroTavolo, setNumeroTavolo] = useContext(TavoloContext);
@@ -217,6 +219,8 @@ function Home() {
     setPrezzo((prezzo - parseFloat(prezzoBevanda)).toFixed(2));
   }
   function InviaDati() {
+    setMostraOrdini(false);
+    setMostraConferma(true);
     let dato = { tavolo: numeroTavolo, pizze: ordiniTotali, cibo: ciboOrdiniTotali,bevande:ordiniBevandeTotali };
     fetch("http://localhost:3010/api/ristorazione/insert-ordine", {
       mode: "cors",
@@ -401,10 +405,12 @@ function Home() {
           </div>
         </section>
       </div>
+      <ModalConferma vista={mostraConferma} setFalse={()=>{setMostraConferma(false)}}/>
       <Modal
       transition="false"
         show={mostraOrdini}
         onHide={() => setMostraOrdini(false)}
+        
       >
         <Modal.Body>
           {ordiniTotali.map((ordine) => (
