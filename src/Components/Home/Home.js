@@ -228,6 +228,10 @@ function Home() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dato),
     });
+    setCiboOrdiniTotali([]);
+    setOrdiniTotali([]);
+    setordiniBevandeTotali([]);
+    setPrezzo(0);
   }
   function ControlloNumeroTavolo(e) {
     setNumeroTavolo(e.target.value);
@@ -405,7 +409,7 @@ function Home() {
           </div>
         </section>
       </div>
-      <ModalConferma vista={mostraConferma} setFalse={()=>{setMostraConferma(false)}}/>
+      <ModalConferma vista={mostraConferma} setFalse={()=>{setMostraConferma(false)}}  />
       <Modal
       transition="false"
         show={mostraOrdini}

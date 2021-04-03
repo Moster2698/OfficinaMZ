@@ -5,7 +5,7 @@ function ModalConferma(props){
     return(
         <Modal show={props.vista} onHide={props.setFalse}>
             <Modal.Body>
-                Vuoi confermare?
+               Ordine effettuato
             </Modal.Body>
         </Modal>
     )
