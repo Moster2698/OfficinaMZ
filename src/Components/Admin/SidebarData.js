@@ -1,43 +1,29 @@
 import React from 'react';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
+import { FaList, FaSyncAlt, FaUser, FaTools, FaPowerOff,FaBars } from "react-icons/fa";
 
 export const SidebarData = [
   {
-    title: 'Home',
-    path: '/admin/',
-    icon: <AiIcons.AiFillHome />,
+    icon: <FaBars />,
     cName: 'nav-text'
   },
   {
-    title: 'Ordini',
-    path: '/admin/orders',
-    icon: <IoIcons.IoIosPaper />,
+    icon: <FaSyncAlt/>,
+    path:"/admin/orders",
     cName: 'nav-text'
   },
   {
-    title: 'Prodotti',
-    path: '/admin/Prodotti',
-    icon: <FaIcons.FaCartPlus />,
+
+    icon: <FaTools />,
     cName: 'nav-text'
   },
   {
-    title: 'Team',
-    path: '/admin/',
-    icon: <IoIcons.IoMdPeople />,
+  
+    icon: <FaUser />,
     cName: 'nav-text'
   },
   {
-    title: 'Messages',
-    path: '/admin/',
-    icon: <FaIcons.FaEnvelopeOpenText />,
-    cName: 'nav-text'
-  },
-  {
-    title: 'Support',
-    path: '/admin/',
-    icon: <IoIcons.IoMdHelpCircle />,
+
+    icon: <FaPowerOff/>,
     cName: 'nav-text'
   }
 ];

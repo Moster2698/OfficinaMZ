@@ -1,13 +1,16 @@
-import React, { useEffect, useState,useContext } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import React, { useEffect, useState, useContext } from "react";
 import {
-  Card,
-  CardColumns
-} from "react-bootstrap";
-import { Container } from "react-bootstrap";
+  FaList,
+  FaSyncAlt,
+  FaUser,
+  FaTools,
+  FaPowerOff,
+  FaBars,
+} from "react-icons/fa";
 import { Redirect } from "react-router";
-import "../Styles/AdminOrders.css";
+import { Container, Col } from "react-bootstrap";
 import UserAuthContext from "../Contexts/UserAuthContext";
+import OrdineTavolo from "./OrdineTavolo";
 function compare(a, b) {
   if (new Date(a.orarioInviato) < new Date(b.orarioInviato)) {
     return -1;
@@ -19,12 +22,12 @@ function compare(a, b) {
 }
 
 function Orders() {
-  const [isAuth,setIsAuth] = useContext(UserAuthContext);
+  const [isAuth, setIsAuth] = useContext(UserAuthContext);
   const [tavoloOrdini, setTavoloOrdini] = useState([]);
   const [num, setNum] = useState(0);
   useEffect(() => {
     setInterval(() => {
-      setNum(n=>n+1);
+      setNum((n) => n + 1);
     }, 10000);
     fetch("http://localhost:3010/api/auth/token", {
       method: "POST",
@@ -36,7 +39,7 @@ function Orders() {
     });
   }, []);
   useEffect(() => {
-    const Prova = () =>{
+    const Prova = () => {
       let accessToken = localStorage.getItem("PizzaAccessToken");
       let refreshToken = localStorage.getItem("PizzaRefreshToken");
       if (accessToken && refreshToken) {
@@ -64,21 +67,22 @@ function Orders() {
                 .then(function (response) {
                   if (response.ok) return response.json();
                   else {
-                    localStorage.setItem("PizzaAccessToken",null);
-                    localStorage.setItem("PizzaRefreshToken",null);
+                    localStorage.setItem("PizzaAccessToken", null);
+                    localStorage.setItem("PizzaRefreshToken", null);
                     return false;
                   }
                 })
-                .then(function (result){
-                  if(result)
-                    localStorage.setItem("PizzaAccessToken", result.accessToken)
-                  else
-                  {
+                .then(function (result) {
+                  if (result)
+                    localStorage.setItem(
+                      "PizzaAccessToken",
+                      result.accessToken
+                    );
+                  else {
                     setIsAuth(false);
-                    return <Redirect to ="/login"></Redirect>
+                    return <Redirect to="/login"></Redirect>;
                   }
-                }
-                );
+                });
               return [];
             }
           })
@@ -87,12 +91,12 @@ function Orders() {
           });
       } else {
         setIsAuth(false);
-        return <Redirect to ="/login"></Redirect>
+        return <Redirect to="/login"></Redirect>;
       }
-    }
+    };
     Prova();
   }, [num]); // eslint-disable-line react-hooks/exhaustive-deps
-  
+
   function RimuoviOrdine(e) {
     let numeroTavolo = { tavolo: e.target.value };
     fetch("http://localhost:3010/api/ristorazione/update-state", {
@@ -109,115 +113,69 @@ function Orders() {
     );
   }
   return (
-    <Container fluid>
-      <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 className="display-4">Ordini</h1>
-      </div>
-      <CardColumns>
-        {tavoloOrdini.map((tavoloOrdine) => (
-          <Col key={tavoloOrdine.NumeroTavolo}>
-            <Card className="mb-4 shadow-sm text-center">
-              <Card.Header className="header-color my-0 fw-normal">
-                <h4 className="my-0 fw-normal">
-                  TAVOLO {tavoloOrdine.NumeroTavolo}
-                </h4>
-              </Card.Header>
-              {tavoloOrdine.pizze.length > 0 && <h2>Pizze</h2>}
-              <Card.Body>
-                <div className="d-flex flex-column  ">
-                  {tavoloOrdine.pizze.map((pizza, idx) => (
-                    <div
-                      key={pizza.idx}
-                      className="d-flex flex-column mb-3 border border-dark"
-                    >
-                      {pizza.NomePizza !== null && (
-                        <p className="h5">{pizza.NomePizza}</p>
-                      )}
-
-                      {pizza.Rimossi !== null && <div>{pizza.Rimossi}</div>}
-                      {pizza.Aggiunte !== null && (
-                        <div>con {pizza.Aggiunte}</div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <div className="d-flex flex-column ">
-                  {tavoloOrdine.cibi.find(
-                    (cibo) => cibo.Nome === "Antipasto"
-                  ) && <h2>Antipasti</h2>}
-                  {tavoloOrdine.cibi
-                    .filter((cibo) => cibo.Nome === "Antipasto")
-                    .map((antipasto, idx) => (
-                      <div
-                        key={idx}
-                        className="d-flex flex-column mb-3 border border-dark"
-                      >
-                        <p>{antipasto.nomeCibo}</p>
-                      </div>
-                    ))}
-                  {tavoloOrdine.cibi.find((cibo) => cibo.Nome === "Primo") && (
-                    <h2>Primi</h2>
-                  )}
-                  {tavoloOrdine.cibi
-                    .filter((cibo) => cibo.Nome === "Primo")
-                    .map((primo, idx) => (
-                      <div
-                        key={idx}
-                        className="d-flex flex-column mb-3 border border-dark"
-                      >
-                        <p>{primo.nomeCibo}</p>
-                      </div>
-                    ))}
-                  {tavoloOrdine.cibi.find(
-                    (cibo) => cibo.Nome === "Secondo"
-                  ) && <h2>Secondi</h2>}
-                  {tavoloOrdine.cibi
-                    .filter((cibo) => cibo.Nome === "Secondo")
-                    .map((secondo, idx) => (
-                      <div
-                        key={idx}
-                        className="d-flex flex-column mb-3 border border-dark"
-                      >
-                        <p>{secondo.nomeCibo}</p>
-                      </div>
-                    ))}
-                  {tavoloOrdine.cibi.find(
-                    (cibo) => cibo.Nome === "Dessert"
-                  ) && <h2>Dolci</h2>}
-                  {tavoloOrdine.cibi
-                    .filter((cibo) => cibo.Nome === "Dessert")
-                    .map((dolce, idx) => (
-                      <div
-                        key={idx}
-                        className="d-flex flex-column mb-3 border border-dark"
-                      >
-                        <p>{dolce.nomeCibo}</p>
-                      </div>
-                    ))}
-                </div>
-              </Card.Body>
-
-              <Card.Footer>
-                <div className="d-flex flex-column">
-                  <p>Orario</p>
-                  <p>
-                    {new Date(tavoloOrdine.orarioInviato).toLocaleTimeString()}
-                  </p>
-                </div>
-                <Button
-                  variant="outline-danger"
-                  onClick={RimuoviOrdine}
-                  value={tavoloOrdine.NumeroTavolo}
-                >
-                  Completato
-                </Button>
-              </Card.Footer>
-            </Card>
-          </Col>
-        ))}
-      </CardColumns>
-    </Container>
+    <div style={{backgroundColor:"#343a40",height:"100%"}}>
+      <nav
+        className="navbar navbar-expand-lg  bg-navbar-Ordini  fixed-top"
+        id="sideNav"
+      >
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">
+          {" "}
+          <span class="d-block d-lg-none text-primary-pz text-primary-pz-2">
+            Il tuo ordine
+          </span>{" "}
+          <span class="d-none d-lg-block">
+            <img
+              class="img-fluid img-profile rounded-circle mx-auto mb-2"
+              src="assets/img/person.png"
+              alt=""
+            />
+          </span>{" "}
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <FaBars />
+        </button>
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav">
+            <li className="nav-item nav-link ">
+              <FaList />
+            </li>
+            <li className="nav-item nav-link">
+              <FaSyncAlt />
+            </li>
+            <li className="nav-item nav-link">
+              <FaTools />
+            </li>
+            <li className="nav-item nav-link">
+              <FaUser />
+            </li>
+            <li className="nav-item nav-link">
+              <FaPowerOff />
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <Container fluid>
+        <h3 className="p-3 text-center" />
+        <div className="row row-cols-1 row-cols-md-4 mb-4 text-center">
+          {tavoloOrdini.map((tavoloOrdine) => (
+            <Col>
+              <OrdineTavolo
+                value={tavoloOrdine}
+                key={tavoloOrdine.NumeroTavolo}
+              />
+            </Col>
+          ))}
+        </div>
+      </Container>
+    </div>
   );
 }
 export default Orders;
-

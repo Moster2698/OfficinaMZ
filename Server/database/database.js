@@ -25,36 +25,28 @@ con.getConnection((err, connection) => {
 });
 
 const getCibo = () => {
-  return new Promise(function(resolve,reject){
-    let query =  "SELECT cibo.IdCibo,nomeCibo,Cibo.Descrizione,Categoria.Nome,cibo.Prezzo,GROUP_CONCAT(DISTINCT nomeIngrediente) as Ingredienti, CASE WHEN ingredienteaggiungicibo.IdCiboAggiunta IS NOT NULL THEN GROUP_CONCAT(DISTINCT JSON_OBJECT('IdAggiunta', ingredienteaggiungicibo.IdCiboAggiunta, 'Nome', ingredienteaggiungicibo.Nome,'Prezzo',ingredienteaggiungicibo.Prezzo) SEPARATOR '|') ELSE NULL END AS PossibiliAggiunte  FROM `cibo`  NATURAL JOIN ciboingrediente NATURAL JOIN ingrediente LEFT JOIN Categoria on cibo.Categoria = Categoria.ID LEFT JOIN ciboaggiunte on cibo.IdCibo = ciboaggiunte.IdCibo LEFT JOIN ingredienteaggiungicibo on ingredienteaggiungicibo.IdCiboAggiunta = ciboaggiunte.IdAggiunta GROUP BY cibo.idCibo";
-    con.query(
-      query,
-      (err, rows) => {
-        if (err) throw err;
-        if (rows.length > 0) {
-          let i=0;
-          for(;i<rows.length;i++){
-            if(rows[i].PossibiliAggiunte!==null){
-              let aggiunte=[];
-              rows[i].PossibiliAggiunte.split('|').forEach((aggiunta)=>{
-                aggiunte.push(JSON.parse(aggiunta));
-              })
-              rows[i].PossibiliAggiunte=aggiunte;
-
-             
-            }
-            else
-            rows[i].PossibiliAggiunte=null;
-          }
-          if(i===rows.length)
-            resolve(rows);
-        } else {
-          reject();
+  return new Promise(function (resolve, reject) {
+    let query =
+      "SELECT cibo.IdCibo,nomeCibo,Cibo.Descrizione,Categoria.Nome,cibo.Prezzo,GROUP_CONCAT(DISTINCT nomeIngrediente) as Ingredienti, CASE WHEN ingredienteaggiungicibo.IdCiboAggiunta IS NOT NULL THEN GROUP_CONCAT(DISTINCT JSON_OBJECT('IdAggiunta', ingredienteaggiungicibo.IdCiboAggiunta, 'Nome', ingredienteaggiungicibo.Nome,'Prezzo',ingredienteaggiungicibo.Prezzo) SEPARATOR '|') ELSE NULL END AS PossibiliAggiunte  FROM `cibo`  NATURAL JOIN ciboingrediente NATURAL JOIN ingrediente LEFT JOIN Categoria on cibo.Categoria = Categoria.ID LEFT JOIN ciboaggiunte on cibo.IdCibo = ciboaggiunte.IdCibo LEFT JOIN ingredienteaggiungicibo on ingredienteaggiungicibo.IdCiboAggiunta = ciboaggiunte.IdAggiunta GROUP BY cibo.idCibo";
+    con.query(query, (err, rows) => {
+      if (err) throw err;
+      if (rows.length > 0) {
+        let i = 0;
+        for (; i < rows.length; i++) {
+          if (rows[i].PossibiliAggiunte !== null) {
+            let aggiunte = [];
+            rows[i].PossibiliAggiunte.split("|").forEach((aggiunta) => {
+              aggiunte.push(JSON.parse(aggiunta));
+            });
+            rows[i].PossibiliAggiunte = aggiunte;
+          } else rows[i].PossibiliAggiunte = null;
         }
+        if (i === rows.length) resolve(rows);
+      } else {
+        reject();
       }
-    );
-  })
-  
+    });
+  });
 };
 const getBevande = () => {
   return new Promise(function (resolve, reject) {
@@ -156,11 +148,12 @@ const InsertCibo = (numeroOrdine, listaCibo) => {
 
   for (let i = 0; i < listaCibo.length; i++) {
     let ordineCibo = listaCibo[i];
+    
     let note = "";
     for (let j = 0; j < ordineCibo.ingredientiRimossi.length; j++) {
       if (j + 1 === ordineCibo.ingredientiRimossi.length)
         note = note.concat(ordineCibo.ingredientiRimossi[j]);
-      else note = note.concat(ordineCibo.ingredientiRimossi[j] + ", ");
+      else note = note.concat(ordineCibo.ingredientiRimossi[j] + ",");
     }
     con.query(
       "INSERT INTO ordinecibo(IdCibo,IdOrdine,Prezzo,Note,Quantita) VALUES(" +
@@ -170,20 +163,31 @@ const InsertCibo = (numeroOrdine, listaCibo) => {
         " ," +
         parseFloat(ordineCibo.prezzoCibo).toFixed(2) +
         (note !== ""
-          ? "," + mysql.escape(note) + ")"
+          ? "," + mysql.escape(note)  +", " + mysql.escape(ordineCibo.quantita) + ")"
           : ",NULL," + mysql.escape(ordineCibo.quantita) + ")"),
       (err, rows) => {
-        if (err) throw new Error("Errore nella comunicazione col db");
-        ordineCibo.ingredientiExtra.forEach((ingredienteExtra)=>{
-          con.query("INSERT INTO ordineciboaggiunta(IDCibo,IDAggiunta,IdOrdineCibo) VALUES("+
-          ordineCibo.idCibo+","+ingredienteExtra.id+","+rows.insertId +")",(err,rows)=>{
-            if(err){
-              console.log(err)
-              throw new Error("Errore inserimento aggiunta dell'ordine");
+        if (err) {
+          console.log(err);
+          throw new Error("Errore nella comunicazione col db");
+          
+        }
+        ordineCibo.ingredientiExtra.forEach((ingredienteExtra) => {
+          con.query(
+            "INSERT INTO ordineciboaggiunta(IDCibo,IDAggiunta,IdOrdineCibo) VALUES(" +
+              ordineCibo.idCibo +
+              "," +
+              ingredienteExtra.id +
+              "," +
+              rows.insertId +
+              ")",
+            (err, rows) => {
+              if (err) {
+                console.log(err);
+                throw new Error("Errore inserimento aggiunta dell'ordine");
+              }
             }
-              
-          })
-        })
+          );
+        });
       }
     );
   }
@@ -194,6 +198,7 @@ const InsertCibo = (numeroOrdine, listaCibo) => {
 const InsertPizza = (numeroOrdine, listaPizze) => {
   for (let i = 0; i < listaPizze.length; i++) {
     let ordineCibo = listaPizze[i];
+
     let note = "";
     for (let j = 0; j < ordineCibo.ingredientiRimossi.length; j++) {
       if (j + 1 === ordineCibo.ingredientiRimossi.length)
@@ -206,7 +211,13 @@ const InsertPizza = (numeroOrdine, listaPizze) => {
         "," +
         mysql.escape(ordineCibo.idPizza) +
         (note !== ""
-          ? "," + mysql.escape(note) + ", " + ordineCibo.prezzo + ")"
+          ? "," +
+            mysql.escape(note) +
+            ", " +
+            ordineCibo.prezzo +
+            "," +
+            mysql.escape(ordineCibo.quantita) +
+            ")"
           : ",NULL," +
             ordineCibo.prezzo +
             "," +
@@ -268,7 +279,7 @@ const AsyncgetOrdini = function () {
                     dato.pizze = result;
 
                     con.query(
-                      "SELECT tavoloordine.IdOrdine,cibo.IdCibo,Ordine.IdOrdine,cibo.nomeCibo,ordinecibo.Note,categoria.Nome,ordinecibo.Fatto from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine LEFT JOIN ordinecibo on ordinecibo.IdOrdine=tavoloordine.IdOrdine  NATURAL JOIN cibo  LEFT JOIN categoria on cibo.Categoria=categoria.ID  where stato=0 and tavoloordine.IdTavolo=" +
+                      "SELECT tavoloordine.IdOrdine,cibo.IdCibo,Ordine.IdOrdine,cibo.nomeCibo,ordinecibo.Note as Rimossi,categoria.Nome,ordinecibo.Fatto from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine LEFT JOIN ordinecibo on ordinecibo.IdOrdine=tavoloordine.IdOrdine  NATURAL JOIN cibo  LEFT JOIN categoria on cibo.Categoria=categoria.ID  where stato=0 and tavoloordine.IdTavolo=" +
                         mysql.escape(numeroTavolo) +
                         " ORDER by cibo.Categoria",
                       (err, resultCibo) => {
@@ -278,7 +289,7 @@ const AsyncgetOrdini = function () {
                         } else {
                           if (resultCibo.length >= 0) {
                             dato.cibi = resultCibo;
-
+                            console.log(dato.pizze);
                             ordini.push(dato);
 
                             if (ordini.length === lastID) {

@@ -243,7 +243,7 @@ function Home() {
   return (
     <div className="Home">
       <nav
-        className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top"
+        className="navbar navbar-expand-lg navbar-dark bg-sidebar fixed-top"
         id="sideNav"
       >
         <a className="navbar-brand js-scroll-trigger" onClick={() => {

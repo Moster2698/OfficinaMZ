@@ -6737,10 +6737,9 @@ a.close.disabled {
 	vertical-align: text-top !important;
 }
 
-.bg-primary {
+.bg-sidebar{
 	background-color: #ffd27e!important;
 }
-
 a.bg-primary:hover,
 a.bg-primary:focus,
 button.bg-primary:hover,
@@ -9949,7 +9948,11 @@ button.bg-dark:focus {
 .text-primary-tit-2 {
 	color: #25243c;
 }
-
+.text-primary-pz {
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 0.9rem;
+ }
 .text-primary-tit {
 	text-transform: uppercase;
 	font-weight: bold;
@@ -10148,10 +10151,7 @@ a.text-dark:focus {
 	}
 }
 
-body {
-	padding-top: 3.375rem;
-	color: #6c757d;
-}
+
 
 @media (min-width: 992px) {
 	body {
@@ -10280,12 +10280,84 @@ section.resume-section {
 min-height: 100vh;
 }
 }/*/
-
-@media (min-width: 992px) {
+.social-icons .social-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 3.5rem;
+	width: 3.5rem;
+	background-color: #495057;
+	color: #fff;
+	border-radius: 100%;
+	font-size: 1.5rem;
+	margin-right: 1.5rem;
+ }
+ 
+ .social-icons .social-icon:last-child {
+	margin-right: 0;
+ }
+ 
+ .social-icons .social-icon:hover {
+	background-color: #bd5d38;
+ }
+ 
+ .dev-icons {
+	font-size: 3rem;
+ }
+ 
+ section.resume-section {
+	display: flex;
+	align-items: center;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: 3rem;
+	padding-bottom: 1rem;
+	max-width: 75rem;
+ }
+ 
+ section.resume-section .resume-section-content {
+	width: 100%;
+ }
+ 
+ 
+ /*@media (min-width: 768px) {
+ section.resume-section {
+ min-height: 100vh;
+ }
+ }/*/
+ 
+ @media (min-width: 992px) {
 	section.resume-section {
-		padding-left: 3rem;
-		padding-right: 3rem;
-		padding-top: 3rem;
-		padding-bottom: 1rem;
+	   padding-left: 3rem;
+	   padding-right: 3rem;
+	   padding-top: 3rem;
+	   padding-bottom: 1rem;
 	}
-}
+ }
+ .container {
+   max-width: 960px;
+ }
+ .card-title-note
+ {
+   margin: .2rem;
+ }
+ .pricing-header {
+   max-width: 700px;
+ }
+ .bd-placeholder-img {
+   font-size: 1.125rem;
+   text-anchor: middle;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   user-select: none;
+ }
+ 
+ @media (min-width: 768px) {
+   .bd-placeholder-img-lg {
+	 font-size: 3.5rem;
+   }
+ }
+ .bg-navbar-Ordini{
+	background-color: #f44336!important;
+    border-right: 0.15rem solid white;
+ }
