@@ -32,7 +32,9 @@ function Home() {
   const [mostraOrdini, setMostraOrdini] = useState(false);
   // const [bevande, setBevande] = useContext(BevandeContext);
   function AggiungiPrezzoeOrdineBevanda(e) {
-    let valoriBevanda = JSON.parse(e.target.value);
+  
+    let valoriBevanda = JSON.parse(e.currentTarget.value);
+  
     let nomeBevanda = valoriBevanda.nome;
     let volumeBevanda = valoriBevanda.volume;
     let prezzoBevanda = valoriBevanda.prezzo;

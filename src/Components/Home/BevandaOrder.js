@@ -2,6 +2,7 @@ import React from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 
 function BevandaOrder(props) {
+  console.log(props)
   function modificaQuantita(e) {
     let operatore = e.target.value;
     

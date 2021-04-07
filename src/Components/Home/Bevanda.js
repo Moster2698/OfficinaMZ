@@ -1,6 +1,7 @@
 import React from "react";
 import {FaPlus,FaSlidersH} from "react-icons/fa";
 function Bevanda(props) {
+
   return (
     <div className="d-flex flex-column flex-md-row justify-content-between mb-5">
       <div className="flex-grow-1">
@@ -9,7 +10,7 @@ function Bevanda(props) {
         </h3>
       </div>
       <div className="flex-shrink-0">
-        <button type="button" className="button-none">
+        <button type="button" className="button-none" onClick={props.AggiungiBevanda} value={JSON.stringify({nome:props.value.Nome,prezzo:props.value.Prezzo,volume:props.value.Quantita})}>
           <span className="text-primary">
             <FaPlus></FaPlus>
           </span>

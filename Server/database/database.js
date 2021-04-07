@@ -143,12 +143,13 @@ const InsertBevande = (ordine, listaBevande) => {
     );
   });
 };
+//SELECT * from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine RIGHT JOIN ordinebevanda on ordinebevanda.IdOrdine = ordine.IdOrdine LEFT  JOIN bevanda on ordinebevanda.IdBevanda = bevanda.IdBevanda
 const InsertCibo = (numeroOrdine, listaCibo) => {
   //Inserire Ordine
 
   for (let i = 0; i < listaCibo.length; i++) {
     let ordineCibo = listaCibo[i];
-    
+
     let note = "";
     for (let j = 0; j < ordineCibo.ingredientiRimossi.length; j++) {
       if (j + 1 === ordineCibo.ingredientiRimossi.length)
@@ -163,13 +164,16 @@ const InsertCibo = (numeroOrdine, listaCibo) => {
         " ," +
         parseFloat(ordineCibo.prezzoCibo).toFixed(2) +
         (note !== ""
-          ? "," + mysql.escape(note)  +", " + mysql.escape(ordineCibo.quantita) + ")"
+          ? "," +
+            mysql.escape(note) +
+            ", " +
+            mysql.escape(ordineCibo.quantita) +
+            ")"
           : ",NULL," + mysql.escape(ordineCibo.quantita) + ")"),
       (err, rows) => {
         if (err) {
           console.log(err);
           throw new Error("Errore nella comunicazione col db");
-          
         }
         ordineCibo.ingredientiExtra.forEach((ingredienteExtra) => {
           con.query(
@@ -275,31 +279,37 @@ const AsyncgetOrdini = function () {
                   console.log(err);
                   reject("Errore nella selezione degli elementi");
                 } else {
-                  if (result.length > 0) {
-                    dato.pizze = result;
-
-                    con.query(
-                      "SELECT tavoloordine.IdOrdine,cibo.IdCibo,Ordine.IdOrdine,cibo.nomeCibo,ordinecibo.Note as Rimossi,categoria.Nome,ordinecibo.Fatto from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine LEFT JOIN ordinecibo on ordinecibo.IdOrdine=tavoloordine.IdOrdine  NATURAL JOIN cibo  LEFT JOIN categoria on cibo.Categoria=categoria.ID  where stato=0 and tavoloordine.IdTavolo=" +
-                        mysql.escape(numeroTavolo) +
-                        " ORDER by cibo.Categoria",
-                      (err, resultCibo) => {
-                        if (err) {
-                          console.log(err);
-                          reject("Errore nella selezione degli elementi");
-                        } else {
-                          if (resultCibo.length >= 0) {
-                            dato.cibi = resultCibo;
-                            console.log(dato.pizze);
-                            ordini.push(dato);
-
+                  if (result.length > 0) dato.pizze = result;
+                  con.query(
+                    "SELECT tavoloordine.IdOrdine,cibo.IdCibo,Ordine.IdOrdine,cibo.nomeCibo,ordinecibo.Note as Rimossi,categoria.Nome,ordinecibo.Fatto from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine LEFT JOIN ordinecibo on ordinecibo.IdOrdine=tavoloordine.IdOrdine  NATURAL JOIN cibo  LEFT JOIN categoria on cibo.Categoria=categoria.ID  where stato=0 and tavoloordine.IdTavolo=" +
+                      mysql.escape(numeroTavolo) +
+                      " ORDER by cibo.Categoria",
+                    (err, resultCibo) => {
+                      if (err) {
+                        console.log(err);
+                        reject("Errore nella selezione degli elementi");
+                      } else {
+                        if (resultCibo.length >= 0) dato.cibi = resultCibo;
+                        con.query(
+                          "SELECT tavoloordine.IdOrdine,bevanda.IdBevanda,Nome,Categoria,prezzo from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine RIGHT JOIN ordinebevanda on ordinebevanda.IdOrdine = ordine.IdOrdine LEFT  JOIN bevanda on ordinebevanda.IdBevanda = bevanda.IdBevanda where stato=0 and IdTavolo= " +
+                            mysql.escape(numeroTavolo),
+                          (err, resultBevande) => {
+                            if (err) {
+                              console.log(err);
+                              reject("Errore nella selezione degli elementi");
+                            } else {
+                              if (resultBevande.length > 0)
+                                ordini.bevande = resultBevande;
+                              ordini.push(dato);
+                            }
                             if (ordini.length === lastID) {
                               resolve(ordini);
                             }
                           }
-                        }
+                        );
                       }
-                    );
-                  }
+                    }
+                  );
                 }
               }
             );
