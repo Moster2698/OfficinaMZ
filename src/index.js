@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import UserAuthProvider from "./Contexts/UserAuthProvider";
 import App from "./App";
-
+import "./Styles/index.css"
 ReactDOM.render(
   <React.StrictMode>
     <UserAuthProvider>

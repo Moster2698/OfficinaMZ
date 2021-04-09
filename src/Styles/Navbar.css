@@ -11,7 +11,10 @@
     font-size: 2rem;
     background: none;
 }
-
+.orders{
+    background-color: rgb(52, 58, 64);
+    min-height: 100vh;
+}
 .nav-menu {
     background-color: #09b3d1;
     width: 11vw;

@@ -135,7 +135,7 @@ const InsertBevande = (ordine, listaBevande) => {
     con.query(
       "INSERT INTO ordineBevanda(IdOrdine,IdBevanda,quantita) VALUES" + query,
       (err, rows) => {
-        if (err) {
+        if (err) { 
           console.log(err);
           throw new Error("Errore nella comunicazione col db");
         }
@@ -269,9 +269,10 @@ const AsyncgetOrdini = function () {
               orarioInviato: orarioInviato,
               cibi: [],
               pizze: [],
+              bevande:[]
             };
             con.query(
-              "SELECT tavoloordine.IdOrdine,tavoloordine.IdTavolo,pizza.idPizza,pizza.NomePizza,pizza.Prezzo+IFNULL(Sum(ingredienteaggiungipizza.Prezzo),0) as Prezzo,GROUP_CONCAT(ingredienteaggiungipizza.NomeIngrediente SEPARATOR ',') as Aggiunte,ordinepizza.Note as Rimossi FROM ordine left JOIN ordinepizza on ordinepizza.IdOrdine=ordine.IdOrdine  LEFT JOIN tavoloordine on ordine.IdOrdine = tavoloordine.IdOrdine  left JOIN pizza on pizza.idPizza = ordinepizza.IdPizza LEFT JOIN pizzaaggiunta on pizzaaggiunta.IdOrdinePizza = ordinepizza.IdOrdinePizza LEFT JOIN ingredienteaggiungipizza on ingredienteaggiungipizza.IdIngrediente = pizzaaggiunta.IdIngrediente where Stato=0 and tavoloordine.IdTavolo=" +
+              "SELECT tavoloordine.IdOrdine,pizza.idPizza,pizza.NomePizza,pizza.Prezzo+IFNULL(Sum(ingredienteaggiungipizza.Prezzo),0) as Prezzo,GROUP_CONCAT(ingredienteaggiungipizza.NomeIngrediente SEPARATOR ',') as Aggiunte,ordinepizza.Note as Rimossi FROM ordine left JOIN ordinepizza on ordinepizza.IdOrdine=ordine.IdOrdine  LEFT JOIN tavoloordine on ordine.IdOrdine = tavoloordine.IdOrdine  left JOIN pizza on pizza.idPizza = ordinepizza.IdPizza LEFT JOIN pizzaaggiunta on pizzaaggiunta.IdOrdinePizza = ordinepizza.IdOrdinePizza LEFT JOIN ingredienteaggiungipizza on ingredienteaggiungipizza.IdIngrediente = pizzaaggiunta.IdIngrediente where Stato=0 and tavoloordine.IdTavolo=" +
                 mysql.escape(numeroTavolo) +
                 " GROUP by ordinepizza.IdOrdinePizza",
               (err, result) => {
@@ -291,16 +292,18 @@ const AsyncgetOrdini = function () {
                       } else {
                         if (resultCibo.length >= 0) dato.cibi = resultCibo;
                         con.query(
-                          "SELECT tavoloordine.IdOrdine,bevanda.IdBevanda,Nome,Categoria,prezzo from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine RIGHT JOIN ordinebevanda on ordinebevanda.IdOrdine = ordine.IdOrdine LEFT  JOIN bevanda on ordinebevanda.IdBevanda = bevanda.IdBevanda where stato=0 and IdTavolo= " +
+                          "SELECT tavoloordine.IdOrdine,bevanda.IdBevanda,Nome,ordinebevanda.quantita as Quantita, prezzo from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine RIGHT JOIN ordinebevanda on ordinebevanda.IdOrdine = ordine.IdOrdine LEFT  JOIN bevanda on ordinebevanda.IdBevanda = bevanda.IdBevanda where stato=0 and IdTavolo= " +
                             mysql.escape(numeroTavolo),
                           (err, resultBevande) => {
                             if (err) {
                               console.log(err);
                               reject("Errore nella selezione degli elementi");
                             } else {
-                              if (resultBevande.length > 0)
-                                ordini.bevande = resultBevande;
+                              
+                              if (resultBevande.length >= 0)
+                                dato.bevande = resultBevande;
                               ordini.push(dato);
+                         
                             }
                             if (ordini.length === lastID) {
                               resolve(ordini);

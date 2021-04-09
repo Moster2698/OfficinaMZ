@@ -113,7 +113,7 @@ function Orders() {
     );
   }
   return (
-    <div style={{backgroundColor:"#343a40",height:"100%"}}>
+    <div className="orders">
       <nav
         className="navbar navbar-expand-lg  bg-navbar-Ordini  fixed-top"
         id="sideNav"
@@ -132,7 +132,7 @@ function Orders() {
           </span>{" "}
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"
