@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 function OrdineTavolo(props) {
- console.log(props);
+ 
   return (
     <>
       <Card>

@@ -3,7 +3,6 @@ const router = express.Router();
 const MiddleWare = require("../../Middleware/InsertsErrorHandling.js");
 const ConnessioneDatabase = require("../../database/database.js");
 
-
 router.get("/ingredienti", MiddleWare.ControllaInputVuoto, (req, res) => {
   ConnessioneDatabase.getIngredienti(res)
     .then(function (result) {
@@ -51,6 +50,9 @@ router.post(
   "/insert-ordine",
   MiddleWare.VerificaInputInsertOrdini,
   (req, res) => {
+    var io = req.app.get('socketio');
+    
+    io.emit("nuovo ordine","nuovo ordine");
     ConnessioneDatabase.InsertOrdine(req);
     res.sendStatus(200); 
   }

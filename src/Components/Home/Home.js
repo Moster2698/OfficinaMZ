@@ -38,7 +38,7 @@ function Home() {
     let nomeBevanda = valoriBevanda.nome;
     let volumeBevanda = valoriBevanda.volume;
     let prezzoBevanda = valoriBevanda.prezzo;
-
+    let idBevanda = valoriBevanda.id;
     if (
       ordiniBevandeTotali.findIndex((bevanda) => bevanda.nome === nomeBevanda) >
       -1
@@ -47,7 +47,8 @@ function Home() {
     else {
       setordiniBevandeTotali(
         ordiniBevandeTotali.concat({
-          id: id,
+          idOrdine: id,
+          id:idBevanda,
           nome: nomeBevanda,
           prezzo: prezzoBevanda,
           volume: volumeBevanda,
@@ -189,8 +190,8 @@ function Home() {
   }
   function ModificaQuantitaBevande(quantita, identificativo) {
     let ordini = [...ordiniBevandeTotali];
-    let idBevanda = ordini.findIndex((ordine) => ordine.id === identificativo);
-    if ((idCibo) => 0) {
+    let idBevanda = ordini.findIndex((ordine) => ordine.idOrdine === identificativo);
+    if ((idBevanda) => 0) {
       if (quantita === "+") {
         let ordine = { ...ordini[idBevanda] };
         ordine.quantita = ordine.quantita + 1;
@@ -216,7 +217,7 @@ function Home() {
   }
   function RimuoviOrdineBevanda(bevandaId, prezzoBevanda) {
     setordiniBevandeTotali(
-      ordiniBevandeTotali.filter((ordine) => ordine.id !== parseInt(bevandaId))
+      ordiniBevandeTotali.filter((ordine) => ordine.idOrdine !== parseInt(bevandaId))
     );
     setPrezzo((prezzo - parseFloat(prezzoBevanda)).toFixed(2));
   }
@@ -404,6 +405,7 @@ function Home() {
             {bevande.map((bevanda) => (
               <Bevanda
                 key={bevanda.IdBevanda}
+
                 AggiungiBevanda={AggiungiPrezzoeOrdineBevanda}
                 value={bevanda}
               />

@@ -129,6 +129,7 @@ const InsertOrdine = (req) => {
   );
 };
 const InsertBevande = (ordine, listaBevande) => {
+  
   listaBevande.forEach((bevanda) => {
     let query = "(" + ordine + "," + bevanda.id + "," + bevanda.quantita + ")";
 

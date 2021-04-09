@@ -15,7 +15,14 @@ app.use(bodyParser.json());
 const MiddleWare = require("./Middleware/InsertsErrorHandling.js");
 const ConnessioneDatabase = require("./database/database.js");
 const server = require("http").createServer(app);
+var io = require('socket.io')(server,{cors: {
+  origin: '*',
+}});
+var sockets=require("./sockets")(io);
+app.set('socketio',io);
 app.use("/api", require("./api"));
+
+
 const verifyJWT = (req, res, next) => {
   let token = req.headers["x-access-token"];
   let refreshToken = req.headers["x-refresh-token"];

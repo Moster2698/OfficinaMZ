@@ -11,6 +11,8 @@ import { Redirect } from "react-router";
 import { Container, Col } from "react-bootstrap";
 import UserAuthContext from "../Contexts/UserAuthContext";
 import OrdineTavolo from "./OrdineTavolo";
+import { io } from "socket.io-client";
+const socket = io("localhost:3010");
 function compare(a, b) {
   if (new Date(a.orarioInviato) < new Date(b.orarioInviato)) {
     return -1;
@@ -26,6 +28,7 @@ function Orders() {
   const [tavoloOrdini, setTavoloOrdini] = useState([]);
   const [num, setNum] = useState(0);
   useEffect(() => {
+    
     setInterval(() => {
       setNum((n) => n + 1);
     }, 10000);
@@ -37,8 +40,6 @@ function Orders() {
       },
       mode: "cors",
     });
-  }, []);
-  useEffect(() => {
     const Prova = () => {
       let accessToken = localStorage.getItem("PizzaAccessToken");
       let refreshToken = localStorage.getItem("PizzaRefreshToken");
@@ -94,9 +95,12 @@ function Orders() {
         return <Redirect to="/login"></Redirect>;
       }
     };
+    socket.on("nuovo ordine",()=>{
+      Prova();
+    })
     Prova();
-  }, [num]); // eslint-disable-line react-hooks/exhaustive-deps
-
+  }, []);
+  
   function RimuoviOrdine(e) {
     let numeroTavolo = { tavolo: e.target.value };
     fetch("http://localhost:3010/api/ristorazione/update-state", {
