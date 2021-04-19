@@ -18,7 +18,6 @@ const server = require("http").createServer(app);
 var io = require('socket.io')(server,{cors: {
   origin: '*',
 }});
-var sockets=require("./sockets")(io);
 app.set('socketio',io);
 app.use("/api", require("./api"));
 

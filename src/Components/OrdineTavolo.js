@@ -1,23 +1,29 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 function OrdineTavolo(props) {
- 
+ console.log(props);
   return (
     <>
       <Card>
-          <Card.Header className="bg-navbar-Ordini">
-              <h4 className="my-0 ">Tavolo {props.value.NumeroTavolo}</h4>
+          <Card.Header className="bg-navbar-Ordini justify-content-center">
+              <h4 className="my-0">Tavolo {props.value.NumeroTavolo}</h4>
           </Card.Header>
           <Card.Body>
               <ul className="list-unstyled mt-3 mb-3 fw-bold">
                   <div>
                       {props.value.pizze.map((pizza,idx)=>(
                          <>
-                              <li key={idx} className="text-primary-pz">{pizza.NomePizza}</li>     
-                              {pizza.Rimossi!==null && pizza.Rimossi.split(',').map((rimosso)=>(
+                         {pizza.NomePizza!==null && (
+                             <>
+                             <li key={idx} className="text-primary-pz">{pizza.NomePizza}</li>     
+                             {pizza.Rimossi!==null && pizza.Rimossi.split(',').map((rimosso)=>(
                                   <li key={rimosso}>- {rimosso}</li>
                               ))}
-                              <br/>       
+                              <br/>    
+                             </>
+                         )}
+                              
+                                
                           </>
                       ))}
                       {props.value.cibi.map((cibo,idx)=>(
@@ -39,7 +45,9 @@ function OrdineTavolo(props) {
                       ))}
                   </div>
               </ul>
+              <button className="w-100 btn btn-lg btn-outline-success">Completato</button>
           </Card.Body>
+          
       </Card>
     </>
   );

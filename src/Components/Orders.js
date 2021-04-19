@@ -26,20 +26,7 @@ function compare(a, b) {
 function Orders() {
   const [isAuth, setIsAuth] = useContext(UserAuthContext);
   const [tavoloOrdini, setTavoloOrdini] = useState([]);
-  const [num, setNum] = useState(0);
   useEffect(() => {
-    
-    setInterval(() => {
-      setNum((n) => n + 1);
-    }, 10000);
-    fetch("http://localhost:3010/api/auth/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "x-refresh-token": localStorage.getItem("PizzaRefreshToken"),
-      },
-      mode: "cors",
-    });
     const Prova = () => {
       let accessToken = localStorage.getItem("PizzaAccessToken");
       let refreshToken = localStorage.getItem("PizzaRefreshToken");
@@ -166,9 +153,9 @@ function Orders() {
           </ul>
         </div>
       </nav>
-      <Container fluid>
+      <Container  fluid>
         <h3 className="p-3 text-center" />
-        <div className="row row-cols-1 row-cols-md-4 mb-4 text-center">
+        <div className="row row-cols-1 row-cols-md-4 mt-5 mb-4 text-center">
           {tavoloOrdini.map((tavoloOrdine) => (
             <Col>
               <OrdineTavolo
@@ -183,3 +170,11 @@ function Orders() {
   );
 }
 export default Orders;
+/*    fetch("http://localhost:3010/api/auth/token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "x-refresh-token": localStorage.getItem("PizzaRefreshToken"),
+      },
+      mode: "cors",
+    });*/
