@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 function OrdineTavolo(props) {
- console.log(props);
+    
   return (
     <>
       <Card>
@@ -15,7 +15,7 @@ function OrdineTavolo(props) {
                          <>
                          {pizza.NomePizza!==null && (
                              <>
-                             <li key={idx} className="text-primary-pz">{pizza.NomePizza}</li>     
+                             <li key={idx} className="text-primary-pz">{pizza.NomePizza} x{pizza.Quantita}</li>     
                              {pizza.Rimossi!==null && pizza.Rimossi.split(',').map((rimosso)=>(
                                   <li key={rimosso}>- {rimosso}</li>
                               ))}
@@ -28,7 +28,7 @@ function OrdineTavolo(props) {
                       ))}
                       {props.value.cibi.map((cibo,idx)=>(
                          <>
-                              <li className="text-primary-pz" key={idx} >{cibo.nomeCibo}</li>     
+                              <li className="text-primary-pz" key={idx} >{cibo.nomeCibo} x{cibo.Quantita}</li>     
                               {cibo.Rimossi!==null && cibo.Rimossi.split(',').map((rimosso)=>(
                                   <li key={rimosso}>- {rimosso}</li>
                               ))}
@@ -45,7 +45,7 @@ function OrdineTavolo(props) {
                       ))}
                   </div>
               </ul>
-              <button className="w-100 btn btn-lg btn-outline-success">Completato</button>
+              <button className="w-100 btn btn-lg btn-outline-success" value={props.value.NumeroTavolo} onClick={props.removeOrder}>Completato</button>
           </Card.Body>
           
       </Card>

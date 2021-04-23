@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useContext } from "react";
 import OrdiniContext from "../../Contexts/OrdiniContext";
 import Pizza from "./Pizza";
-import NumeroTavolo from "./NumeroTavolo";
 import CiboOrder from "./CiboOrder";
 import PizzaOrder from "./PizzaOrder";
 import TavoloContext from "../../Contexts/TavoloContext";
@@ -59,6 +58,10 @@ function Home() {
       setPrezzo((parseFloat(prezzo) + parseFloat(prezzoBevanda)).toFixed(2));
     }
   }
+  function objectsEqual (o1, o2) {
+    Object.keys(o1).length === Object.keys(o2).length
+    && Object.keys(o1).every(p => o1[p] === o2[p]);
+  }
   function AggiungiPrezzoOrdinePizza(e) {
     let valoriPizza = JSON.parse(e.currentTarget.value);
 
@@ -69,15 +72,15 @@ function Home() {
     let ingredientiRimossi = valoriPizza.ingredientiRimossi;
 
     let ingredientiExtra = valoriPizza.ingredientiExtra;
-
     if (
       ordiniTotali.findIndex(
-        (pizza) =>
+        (pizza) => (
           pizza.idPizza === idPizzaScelta &&
-          pizza.ingredientiRimossi.toString() === ingredientiRimossi.toString()
+          pizza.ingredientiRimossi.toString() === ingredientiRimossi.toString() && objectsEqual(pizza.ingredientiExtra,ingredientiExtra) )
       ) > -1
     )
       modificaQuantitaPizza("+", id - 1);
+
     else {
       setOrdiniTotali(
         ordiniTotali.concat({
@@ -225,7 +228,7 @@ function Home() {
     setMostraOrdini(false);
     setMostraConferma(true);
     let dato = { tavolo: numeroTavolo, pizze: ordiniTotali, cibo: ciboOrdiniTotali,bevande:ordiniBevandeTotali };
-    fetch("http://localhost:3010/api/ristorazione/insert-ordine", {
+    fetch("http://192.168.178.20:3010/api/ristorazione/insert-ordine", {
       mode: "cors",
       method: "Post",
       headers: { "Content-Type": "application/json" },

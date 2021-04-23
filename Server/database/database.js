@@ -273,7 +273,7 @@ const AsyncgetOrdini = function () {
               bevande:[]
             };
             con.query(
-              "SELECT tavoloordine.IdOrdine,pizza.idPizza,pizza.NomePizza,pizza.Prezzo+IFNULL(Sum(ingredienteaggiungipizza.Prezzo),0) as Prezzo,GROUP_CONCAT(ingredienteaggiungipizza.NomeIngrediente SEPARATOR ',') as Aggiunte,ordinepizza.Note as Rimossi FROM ordine left JOIN ordinepizza on ordinepizza.IdOrdine=ordine.IdOrdine  LEFT JOIN tavoloordine on ordine.IdOrdine = tavoloordine.IdOrdine  left JOIN pizza on pizza.idPizza = ordinepizza.IdPizza LEFT JOIN pizzaaggiunta on pizzaaggiunta.IdOrdinePizza = ordinepizza.IdOrdinePizza LEFT JOIN ingredienteaggiungipizza on ingredienteaggiungipizza.IdIngrediente = pizzaaggiunta.IdIngrediente where Stato=0 and tavoloordine.IdTavolo=" +
+              "SELECT tavoloordine.IdOrdine,pizza.idPizza,pizza.NomePizza,quantita as Quantita,pizza.Prezzo+IFNULL(Sum(ingredienteaggiungipizza.Prezzo),0) as Prezzo,GROUP_CONCAT(ingredienteaggiungipizza.NomeIngrediente SEPARATOR ',') as Aggiunte,ordinepizza.Note as Rimossi FROM ordine left JOIN ordinepizza on ordinepizza.IdOrdine=ordine.IdOrdine  LEFT JOIN tavoloordine on ordine.IdOrdine = tavoloordine.IdOrdine  left JOIN pizza on pizza.idPizza = ordinepizza.IdPizza LEFT JOIN pizzaaggiunta on pizzaaggiunta.IdOrdinePizza = ordinepizza.IdOrdinePizza LEFT JOIN ingredienteaggiungipizza on ingredienteaggiungipizza.IdIngrediente = pizzaaggiunta.IdIngrediente where Stato=0 and tavoloordine.IdTavolo=" +
                 mysql.escape(numeroTavolo) +
                 " GROUP by ordinepizza.IdOrdinePizza",
               (err, result) => {
@@ -283,7 +283,7 @@ const AsyncgetOrdini = function () {
                 } else {
                   if (result.length > 0) dato.pizze = result;
                   con.query(
-                    "SELECT tavoloordine.IdOrdine,cibo.IdCibo,Ordine.IdOrdine,cibo.nomeCibo,ordinecibo.Note as Rimossi,categoria.Nome,ordinecibo.Fatto from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine LEFT JOIN ordinecibo on ordinecibo.IdOrdine=tavoloordine.IdOrdine  NATURAL JOIN cibo  LEFT JOIN categoria on cibo.Categoria=categoria.ID  where stato=0 and tavoloordine.IdTavolo=" +
+                    "SELECT tavoloordine.IdOrdine,cibo.IdCibo,Ordine.IdOrdine,quantita as Quantita,cibo.nomeCibo,ordinecibo.Note as Rimossi,categoria.Nome,ordinecibo.Fatto from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine LEFT JOIN ordinecibo on ordinecibo.IdOrdine=tavoloordine.IdOrdine  NATURAL JOIN cibo  LEFT JOIN categoria on cibo.Categoria=categoria.ID  where stato=0 and tavoloordine.IdTavolo=" +
                       mysql.escape(numeroTavolo) +
                       " ORDER by cibo.Categoria",
                     (err, resultCibo) => {
@@ -293,8 +293,8 @@ const AsyncgetOrdini = function () {
                       } else {
                         if (resultCibo.length >= 0) dato.cibi = resultCibo;
                         con.query(
-                          "SELECT tavoloordine.IdOrdine,bevanda.IdBevanda,Nome,ordinebevanda.quantita as Quantita, prezzo from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine RIGHT JOIN ordinebevanda on ordinebevanda.IdOrdine = ordine.IdOrdine LEFT  JOIN bevanda on ordinebevanda.IdBevanda = bevanda.IdBevanda where stato=0 and IdTavolo= " +
-                            mysql.escape(numeroTavolo),
+                            "SELECT tavoloordine.IdOrdine,bevanda.IdBevanda,Nome,Sum(ordinebevanda.quantita) as Quantita, prezzo from tavoloordine LEFT JOIN ordine on tavoloordine.IdOrdine=ordine.IdOrdine RIGHT JOIN ordinebevanda on ordinebevanda.IdOrdine = ordine.IdOrdine LEFT  JOIN bevanda on ordinebevanda.IdBevanda = bevanda.IdBevanda where stato=0 and IdTavolo= "+
+                            mysql.escape(numeroTavolo) + "  GROUP By (IdBevanda)",
                           (err, resultBevande) => {
                             if (err) {
                               console.log(err);
@@ -303,8 +303,9 @@ const AsyncgetOrdini = function () {
                               
                               if (resultBevande.length >= 0)
                                 dato.bevande = resultBevande;
+
                               ordini.push(dato);
-                         
+
                             }
                             if (ordini.length === lastID) {
                               resolve(ordini);
@@ -457,5 +458,4 @@ SELECT Ordine.IdOrdine,tavoloordine.IdTavolo,cibo.nomeCibo,ordinecibo.Prezzo,ord
     
     }
   );
-  
-};*/
+SELECT  tavoloordine.IdOrdine,ordinepizza.IdOrdinePizza,pizza.idPizza,pizza.NomePizza,pizza.Prezzo+IFNULL(Sum(ingredienteaggiungipizza.Prezzo),0) as Prezzo,ordinepizza.Note as Rimossi,GROUP_CONCAT(ingredienteaggiungipizza.NomeIngrediente SEPARATOR ',') as Aggiunte, Sum(DISTINCT ordinepizza.Quantita) as Quantita FROM ordine RIGHT JOIN ordinepizza on ordinepizza.IdOrdine=ordine.IdOrdine  LEFT JOIN tavoloordine on ordine.IdOrdine = tavoloordine.IdOrdine  left JOIN pizza on pizza.idPizza = ordinepizza.IdPizza LEFT JOIN pizzaaggiunta on pizzaaggiunta.IdOrdinePizza = ordinepizza.IdOrdinePizza LEFT JOIN ingredienteaggiungipizza on ingredienteaggiungipizza.IdIngrediente = pizzaaggiunta.IdIngrediente where Stato=0 and tavoloordine.IdTavolo= 11 GROUP by ordinepizza.IdPizza ,RImossi,pizzaaggiunta.IdOrdinePizza};*/

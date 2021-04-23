@@ -9,7 +9,7 @@ function PizzaOrder(props) {
       props.removeOrderPizza(props.id, props.price);
     else props.modificaQuantita(operatore, props.id);
   }
-
+console.log(props.ingredientiExtra);
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between">
@@ -20,7 +20,7 @@ function PizzaOrder(props) {
           {props.ingredientiExtra.length > 0 &&
             props.ingredientiExtra.map((ingrediente) => (
               <p key={ingrediente.id} className="ingrediente-ordine">
-                {ingrediente.name}
+                {ingrediente.nome}
               </p>
             ))}
           {props.ingredientiRimossi.length > 0 && <h6>Senza</h6>}

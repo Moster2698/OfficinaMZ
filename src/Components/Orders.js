@@ -26,12 +26,18 @@ function compare(a, b) {
 function Orders() {
   const [isAuth, setIsAuth] = useContext(UserAuthContext);
   const [tavoloOrdini, setTavoloOrdini] = useState([]);
+  function removeOrder(e){
+    let numeroTavolo = parseInt(e.target.value);
+
+  
+      setTavoloOrdini(tavoloOrdini.filter((tavoloOrdine)=>tavoloOrdine.NumeroTavolo!==numeroTavolo))
+  }
   useEffect(() => {
     const Prova = () => {
       let accessToken = localStorage.getItem("PizzaAccessToken");
       let refreshToken = localStorage.getItem("PizzaRefreshToken");
       if (accessToken && refreshToken) {
-        fetch("http://localhost:3010/api/ordini/mostraOrdini", {
+        fetch("http://192.168.178.20:3010/api/ordini/mostraOrdini", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -44,7 +50,7 @@ function Orders() {
             if (response.ok) return response.json();
             //controllo il refresh token e se è valido
             else {
-              fetch("http://localhost:3010/api/auth/token", {
+              fetch("http://192.168.178.20:3010/api/auth/token", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/x-www-form-urlencoded",
@@ -90,7 +96,7 @@ function Orders() {
   
   function RimuoviOrdine(e) {
     let numeroTavolo = { tavolo: e.target.value };
-    fetch("http://localhost:3010/api/ristorazione/update-state", {
+    fetch("http://192.168.178.20:3010/api/ristorazione/update-state", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(numeroTavolo),
@@ -161,6 +167,7 @@ function Orders() {
               <OrdineTavolo
                 value={tavoloOrdine}
                 key={tavoloOrdine.NumeroTavolo}
+                removeOrder={removeOrder}
               />
             </Col>
           ))}

@@ -13,7 +13,7 @@ function Login() {
 
   function inviaDati() {
     let dati = { username: username, password: password };
-    fetch("http://127.0.0.1:3010/api/auth/login", {
+    fetch("http://192.168.178.20:3010/api/auth/login", {
       method: "Post",
       headers: {
         Accept: "application/json, text/plain, */*",

@@ -5,7 +5,7 @@ import { useState } from "react";
 function IngredientiProvider(props) {
   const [ingredienti, setIngredienti] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3010/api/ristorazione/ingredientiAggiunta", {
+    fetch("http://192.168.178.20:3010/api/ristorazione/ingredientiAggiunta", {
       method: "get",
       headers: {},
       mode: "cors",

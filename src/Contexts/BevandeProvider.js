@@ -7,7 +7,7 @@ function BevandeProvider(props){
     
 useEffect(() => {
 
-    fetch('http://localhost:3010/api/ristorazione/get-bevande', { 
+    fetch('http://192.168.178.20:3010/api/ristorazione/get-bevande', {
         method:'Get',
         headers: {},
         mode: 'cors'

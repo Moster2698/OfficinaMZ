@@ -3,7 +3,7 @@
 var pietanze = [];
 async function PrendiPietanze() {
   try {
-    const response = await fetch("http://localhost:3010/api/ristorazione/cibo", {
+    const response = await fetch("http://192.168.178.20:3010/api/ristorazione/cibo", {
       method: "get",
       headers: {},
       mode: "cors",

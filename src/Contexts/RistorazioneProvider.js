@@ -8,7 +8,7 @@ function RistorazioneProvider(props) {
   const [pizze, setPizze] = useState([]);
   const [bevande, setBevande] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:3010/api/ristorazione/get-bevande", {
+    fetch("http://192.168.178.20:3010/api/ristorazione/get-bevande", {
       method: "Get",
       headers: {},
       mode: "cors",
@@ -17,7 +17,7 @@ function RistorazioneProvider(props) {
       .then((result) => {
         setBevande(result);
       });
-    fetch("http://localhost:3010/api/ristorazione/cibo", {
+    fetch("http://192.168.178.20:3010/api/ristorazione/cibo", {
       method: "get",
       headers: {},
       mode: "cors",
@@ -32,7 +32,7 @@ function RistorazioneProvider(props) {
         setSecondi(result.filter((pietanza) => pietanza.Nome === "Secondo"));
         setDolci(result.filter((pietanza) => pietanza.Nome === "Dessert"));
       });
-    fetch("http://localhost:3010/api/ristorazione/pizze", {
+    fetch("http://192.168.178.20:3010/api/ristorazione/pizze", {
       method: "Get",
       headers: {},
       mode: "cors",
