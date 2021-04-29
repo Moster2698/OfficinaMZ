@@ -323,10 +323,10 @@ function Home() {
         </div>
       </nav>
 
-      <div className="container-fluid p-0">
+      <div className="container-fluid mb-5 p-0">
         <section className="resume-section" id="about">
           <div className="resume-section-content">
-            <h1 className="mb-0">
+            <h1 className="mb-0 mt-sm-5">
               Il
               <span className="text-primary">Menù</span>
             </h1>

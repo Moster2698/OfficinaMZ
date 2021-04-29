@@ -8,11 +8,9 @@ import IngredientiProvider from "./Contexts/IngredientiProvider";
 import TavoloProvider from "./Contexts/TavoloProvider";
 import OrdiniProvider from "./Contexts/OrdiniProvider";
 import Resoconto from "./Components/Home/ResocontoOrdine/Resoconto";
-import Mappa from "./Components/Admin/Mappa";
 import PrezzoProvider from "./Contexts/PrezzoProvider";
 import UserAuthContext from "./Contexts/UserAuthContext";
 import RistorazioneProvider from "./Contexts/RistorazioneProvider";
-import BevandeProvider from "./Contexts/BevandeProvider";
 import history from "./usefulcomponents/history";
 function App() {
   const [isAuth, setIsAuth] = useContext(UserAuthContext);

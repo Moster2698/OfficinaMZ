@@ -8,7 +8,7 @@ import {
   FaBars,
 } from "react-icons/fa";
 import { Redirect } from "react-router";
-import { Container, Col } from "react-bootstrap";
+import { Container, Col,Row,CardDeck } from "react-bootstrap";
 import UserAuthContext from "../Contexts/UserAuthContext";
 import OrdineTavolo from "./OrdineTavolo";
 import { io } from "socket.io-client";
@@ -28,7 +28,14 @@ function Orders() {
   const [tavoloOrdini, setTavoloOrdini] = useState([]);
   function removeOrder(e){
     let numeroTavolo = parseInt(e.target.value);
-
+    fetch("http://192.168.178.20:3010/api/ristorazione/update-state",{
+      method:"POST",
+      headers:{
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({tavolo:numeroTavolo}),
+      mode:"cors",
+    })
   
       setTavoloOrdini(tavoloOrdini.filter((tavoloOrdine)=>tavoloOrdine.NumeroTavolo!==numeroTavolo))
   }
@@ -110,60 +117,14 @@ function Orders() {
     );
   }
   return (
-    <div className="orders">
-      <nav
-        className="navbar navbar-expand-lg  bg-navbar-Ordini  fixed-top"
-        id="sideNav"
-      >
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">
-          {" "}
-          <span class="d-block d-lg-none text-primary-pz text-primary-pz-2">
-            Il tuo ordine
-          </span>{" "}
-          <span class="d-none d-lg-block">
-            <img
-              class="img-fluid img-profile rounded-circle mx-auto mb-2"
-              src="assets/img/person.png"
-              alt=""
-            />
-          </span>{" "}
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <FaBars />
-        </button>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav">
-            <li className="nav-item nav-link ">
-              <FaList />
-            </li>
-            <li className="nav-item nav-link">
-              <FaSyncAlt />
-            </li>
-            <li className="nav-item nav-link">
-              <FaTools />
-            </li>
-            <li className="nav-item nav-link">
-              <FaUser />
-            </li>
-            <li className="nav-item nav-link">
-              <FaPowerOff />
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <Container  fluid>
+    <div className="orders ">
+
+      <Container   fluid>
         <h3 className="p-3 text-center" />
-        <div className="row row-cols-1 row-cols-md-4 mt-5 mb-4 text-center">
+        <div className="row row-cols-1 row-cols-md-4 mt-5  text-center">
+
           {tavoloOrdini.map((tavoloOrdine) => (
-            <Col>
+            <Col className="w-auto">
               <OrdineTavolo
                 value={tavoloOrdine}
                 key={tavoloOrdine.NumeroTavolo}
@@ -171,7 +132,7 @@ function Orders() {
               />
             </Col>
           ))}
-        </div>
+       </div>
       </Container>
     </div>
   );

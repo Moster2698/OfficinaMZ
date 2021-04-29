@@ -1,10 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 function OrdineTavolo(props) {
-    
+    console.log(props.value.pizze);
   return (
     <>
-      <Card>
+      <Card className=" mb-2">
           <Card.Header className="bg-navbar-Ordini justify-content-center">
               <h4 className="my-0">Tavolo {props.value.NumeroTavolo}</h4>
           </Card.Header>
@@ -19,7 +19,8 @@ function OrdineTavolo(props) {
                              {pizza.Rimossi!==null && pizza.Rimossi.split(',').map((rimosso)=>(
                                   <li key={rimosso}>- {rimosso}</li>
                               ))}
-                              <br/>    
+                              <br/>
+
                              </>
                          )}
                               

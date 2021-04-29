@@ -273,9 +273,7 @@ const AsyncgetOrdini = function () {
               bevande:[]
             };
             con.query(
-              "SELECT tavoloordine.IdOrdine,pizza.idPizza,pizza.NomePizza,quantita as Quantita,pizza.Prezzo+IFNULL(Sum(ingredienteaggiungipizza.Prezzo),0) as Prezzo,GROUP_CONCAT(ingredienteaggiungipizza.NomeIngrediente SEPARATOR ',') as Aggiunte,ordinepizza.Note as Rimossi FROM ordine left JOIN ordinepizza on ordinepizza.IdOrdine=ordine.IdOrdine  LEFT JOIN tavoloordine on ordine.IdOrdine = tavoloordine.IdOrdine  left JOIN pizza on pizza.idPizza = ordinepizza.IdPizza LEFT JOIN pizzaaggiunta on pizzaaggiunta.IdOrdinePizza = ordinepizza.IdOrdinePizza LEFT JOIN ingredienteaggiungipizza on ingredienteaggiungipizza.IdIngrediente = pizzaaggiunta.IdIngrediente where Stato=0 and tavoloordine.IdTavolo=" +
-                mysql.escape(numeroTavolo) +
-                " GROUP by ordinepizza.IdOrdinePizza",
+                `SELECT tavoloordine.IdOrdine,ordinepizza.IdOrdinePizza,pizza.idPizza,pizza.NomePizza,pizza.Prezzo+IFNULL(Sum(ingredienteaggiungipizza.Prezzo),0) as Prezzo,ordinepizza.Note as Rimossi,GROUP_CONCAT(ingredienteaggiungipizza.NomeIngrediente SEPARATOR ",") as Aggiunte, Sum(DISTINCT ordinepizza.Quantita) as Quantita FROM ordine RIGHT JOIN ordinepizza on ordinepizza.IdOrdine=ordine.IdOrdine  LEFT JOIN tavoloordine on ordine.IdOrdine = tavoloordine.IdOrdine  left JOIN pizza on pizza.idPizza = ordinepizza.IdPizza LEFT JOIN pizzaaggiunta on pizzaaggiunta.IdOrdinePizza = ordinepizza.IdOrdinePizza LEFT JOIN ingredienteaggiungipizza on ingredienteaggiungipizza.IdIngrediente = pizzaaggiunta.IdIngrediente where Stato=0 and tavoloordine.IdTavolo= `+mysql.escape(numeroTavolo)+ " GROUP by ordinepizza.IdPizza ,RImossi,pizzaaggiunta.IdOrdinePizza",
               (err, result) => {
                 if (err) {
                   console.log(err);

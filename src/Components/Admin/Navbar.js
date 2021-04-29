@@ -1,25 +1,71 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {Link} from 'react-router-dom';
-import {SidebarData} from './SidebarData';
-import '../../Styles/Navbar.css'
+import {
+    FaList,
+    FaSyncAlt,
+    FaUser,
+    FaTools,
+    FaPowerOff,
+    FaBars,
+} from "react-icons/fa";
+import {Collapse} from "react-bootstrap";
+
 function Navbar(){
-  
+  const [show,setShow] = useState(false);
     return(
         <>
-        <nav className={'nav-menu active'}>
-            <ul className='nav-menu-items'>
-                {SidebarData.map((item,index) => {
-                    return (
-                        <li key={index} className={item.cName}>
-                            <Link to={item.path}>
-                                {item.icon}
-                                <span>{item.title}</span>
+            <nav
+                className="navbar navbar-expand-lg   bg-navbar-Ordini static-top"
+                id="sideNav"
+            >
+                <a className="navbar-brand  js-scroll-trigger" href="#page-top">
+                    {" "}
+                </a>
+                        <ul className="nav d-lg-none w-100  justify-content-end ">
+                            <Link to="/admin/orders">
+                                <li className="nav-item nav-link ">
+                                    <FaList/>
+                                </li>
                             </Link>
+                            <li className="nav-item nav-link">
+                                <FaSyncAlt/>
+                            </li>
+                            <li className="nav-item nav-link">
+                                <FaTools/>
+                            </li>
+                            <li className="nav-item nav-link">
+                                <FaUser/>
+                            </li>
+                            <li className="nav-item nav-link">
+                                <FaPowerOff/>
+                            </li>
+                        </ul>
+
+
+
+
+                <div className="collapse navbar-collapse">
+                    <ul className="navbar-nav">
+                        <Link to="/admin/orders">
+                        <li className="nav-item nav-link ">
+                            <FaList/>
                         </li>
-                    )
-                })}
-            </ul>
-        </nav>
+                        </Link>
+                        <li className="nav-item nav-link">
+                            <FaSyncAlt/>
+                        </li>
+                        <li className="nav-item nav-link">
+                            <FaTools/>
+                        </li>
+                        <li className="nav-item nav-link">
+                            <FaUser/>
+                        </li>
+                        <li className="nav-item nav-link">
+                            <FaPowerOff/>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </>
     )
 }
